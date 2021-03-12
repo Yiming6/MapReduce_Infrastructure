@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package masterworker;
+
+service Masterworker {
+    rpc Job (JobRequest) returns (Reply) {}
+    rpc Heartbeat(HeartbeatMsg) returns (HeartbeatMsg) {}
+}
+
+message Fragment {
+    string file = 1;
+    int32 start = 2;
+    int32 end = 3;
+}
+
+message JobRequest {
+    int32 id = 1;
+    int32 type = 2;
+    repeated Fragment shard = 3;
+    int32 num = 4;
+    string dir = 5;
+}
+
+message Reply {
+    string port = 1;
+    int32 type = 2;
+    repeated Fragment file = 3;
+}
+
+message HeartbeatMsg {
+    string port = 1;
+    int32 status = 2;
+}
